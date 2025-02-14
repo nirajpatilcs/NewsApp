@@ -1,9 +1,10 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SearchScreen } from "@/screens";
+import { SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView>
-      <Text> hello world</Text>
+      <SearchScreen />
     </SafeAreaView>
   );
 }
