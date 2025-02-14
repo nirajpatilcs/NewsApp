@@ -1,11 +1,26 @@
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { ArticleCard } from "@/components";
+import type { Article } from "@/types";
+import { useMemo } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, TextInput } from "react-native";
+import uuid from "react-native-uuid";
 import { useSearchScreen } from "./useSearchScreen";
 
 export const SearchScreen = () => {
   const {
-    data: { query },
+    data: { query, articles, error, loading, emptySearch },
     operations: { handleChangeText },
   } = useSearchScreen();
+
+  const searchedArticles = useMemo(() => {
+    return articles.map((article: Article) => (
+      <ArticleCard
+        key={uuid.v4()}
+        title={article.title}
+        description={article.description}
+        imageUrl={article.urlToImage}
+      />
+    ));
+  }, [articles]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -15,6 +30,7 @@ export const SearchScreen = () => {
         value={query}
         onChangeText={handleChangeText}
       />
+      <ScrollView style={styles.scrollContainer}>{searchedArticles}</ScrollView>
     </SafeAreaView>
   );
 };
